@@ -1,11 +1,10 @@
 package com.prisma.deploy.schema.mutations
 
-import com.prisma.deploy.schema.mutations.{FunctionInput, HeaderInput}
 import com.prisma.deploy.specutils.DeploySpecBase
 import com.prisma.shared.models._
 import org.scalatest.{FlatSpec, Matchers}
 
-class DeployMutationSpec extends FlatSpec with Matchers with DeploySpecBase {
+trait DeployMutationSpec extends FlatSpec with Matchers with DeploySpecBase {
 
   val projectPersistence   = testDependencies.projectPersistence
   val migrationPersistence = testDependencies.migrationPersistence

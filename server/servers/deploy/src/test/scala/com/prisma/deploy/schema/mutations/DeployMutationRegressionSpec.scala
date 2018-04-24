@@ -4,7 +4,7 @@ import com.prisma.deploy.specutils.DeploySpecBase
 import com.prisma.shared.models.{MigrationId, MigrationStatus, ProjectId}
 import org.scalatest.{FlatSpec, Matchers}
 
-class DeployMutationRegressionSpec extends FlatSpec with Matchers with DeploySpecBase {
+trait DeployMutationRegressionSpec extends FlatSpec with Matchers with DeploySpecBase {
 
   val projectPersistence   = testDependencies.projectPersistence
   val migrationPersistence = testDependencies.migrationPersistence

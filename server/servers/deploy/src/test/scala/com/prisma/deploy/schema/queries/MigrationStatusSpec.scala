@@ -4,7 +4,7 @@ import com.prisma.deploy.specutils.DeploySpecBase
 import com.prisma.shared.models.{CreateField, CreateModel, Migration, ProjectId}
 import org.scalatest.{FlatSpec, Matchers}
 
-class MigrationStatusSpec extends FlatSpec with Matchers with DeploySpecBase {
+trait MigrationStatusSpec extends FlatSpec with Matchers with DeploySpecBase {
 
   val projectPersistence   = testDependencies.projectPersistence
   val migrationPersistence = testDependencies.migrationPersistence

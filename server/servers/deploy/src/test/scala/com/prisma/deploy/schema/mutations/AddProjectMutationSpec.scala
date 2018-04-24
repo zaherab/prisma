@@ -5,7 +5,7 @@ import com.prisma.shared.models.ProjectId
 import cool.graph.cuid.Cuid
 import org.scalatest.{FlatSpec, Matchers}
 
-class AddProjectMutationSpec extends FlatSpec with Matchers with DeploySpecBase {
+trait AddProjectMutationSpec extends FlatSpec with Matchers with DeploySpecBase {
 
   val projectPersistence = testDependencies.projectPersistence
 

@@ -4,7 +4,7 @@ import com.prisma.deploy.specutils.DeploySpecBase
 import com.prisma.shared.models.ProjectId
 import org.scalatest.{FlatSpec, Matchers}
 
-class ClusterInfoSpec extends FlatSpec with Matchers with DeploySpecBase {
+trait ClusterInfoSpec extends FlatSpec with Matchers with DeploySpecBase {
 
   "ClusterInfo query" should "return cluster version" in {
     val (project, _) = setupProject(basicTypesGql)

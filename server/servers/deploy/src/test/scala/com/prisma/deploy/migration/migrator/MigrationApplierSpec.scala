@@ -8,7 +8,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.Future
 
-class MigrationApplierSpec extends FlatSpec with Matchers with DeploySpecBase with AwaitUtils {
+trait MigrationApplierSpec extends FlatSpec with Matchers with DeploySpecBase with AwaitUtils {
   import system.dispatcher
   val persistence = testDependencies.migrationPersistence
 

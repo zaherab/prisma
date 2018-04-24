@@ -3,9 +3,8 @@ package com.prisma.deploy.specutils
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import com.prisma.auth.AuthImpl
-import com.prisma.config.ConfigLoader
-import com.prisma.connectors.utils.ConnectorUtils
 import com.prisma.deploy.DeployDependencies
+import com.prisma.deploy.connector.DeployConnector
 import com.prisma.deploy.migration.validation.SchemaError
 import com.prisma.deploy.schema.mutations.{FunctionInput, FunctionValidator}
 import com.prisma.deploy.server.auth.DummyClusterAuth
@@ -13,12 +12,10 @@ import com.prisma.errors.{BugsnagErrorReporter, ErrorReporter}
 import com.prisma.messagebus.pubsub.inmemory.InMemoryAkkaPubSub
 import com.prisma.shared.models.Project
 
-case class DeployTestDependencies()(implicit val system: ActorSystem, val materializer: ActorMaterializer) extends DeployDependencies {
-  import system.dispatcher
+case class DeployTestDependencies(deployConnector: DeployConnector)(implicit val system: ActorSystem, val materializer: ActorMaterializer)
+    extends DeployDependencies {
 
   override implicit def self: DeployDependencies = this
-
-  val config = ConfigLoader.load()
 
   implicit val reporter: ErrorReporter    = BugsnagErrorReporter(sys.env.getOrElse("BUGSNAG_API_KEY", ""))
   override lazy val migrator              = TestMigrator(migrationPersistence, deployPersistencePlugin.deployMutactionExecutor)
@@ -27,9 +24,9 @@ case class DeployTestDependencies()(implicit val system: ActorSystem, val materi
 
   override def apiAuth = AuthImpl
 
-  def deployPersistencePlugin = ConnectorUtils.loadDeployConnector(config.copy(databases = config.databases.map(_.copy(pooled = false))))
-
   override def functionValidator: FunctionValidator = (project: Project, fn: FunctionInput) => {
     if (fn.name == "failing") Vector(SchemaError(`type` = "model", field = "field", description = "error")) else Vector.empty
   }
+
+  override def deployPersistencePlugin = deployConnector
 }

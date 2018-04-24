@@ -136,6 +136,7 @@ lazy val deployConnector = connectorProject("deploy-connector")
 
 lazy val deployConnectorMySql = connectorProject("deploy-connector-mysql")
   .dependsOn(deployConnector % "compile")
+  .dependsOn(deploy % "test->test")
   .dependsOn(prismaConfig % "compile")
   .dependsOn(scalaUtils % "compile")
   .settings(
@@ -144,6 +145,7 @@ lazy val deployConnectorMySql = connectorProject("deploy-connector-mysql")
 
 lazy val deployConnectorPostgres = connectorProject("deploy-connector-postgresql")
   .dependsOn(deployConnector % "compile")
+  .dependsOn(deploy % "test->test")
   .dependsOn(prismaConfig % "compile")
   .dependsOn(scalaUtils % "compile")
   .settings(

@@ -4,7 +4,7 @@ import com.prisma.deploy.specutils.DeploySpecBase
 import com.prisma.shared.models.ProjectId
 import org.scalatest.{FlatSpec, Matchers}
 
-class ProjectSpec extends FlatSpec with Matchers with DeploySpecBase {
+trait ProjectSpec extends FlatSpec with Matchers with DeploySpecBase {
 
   "Project query" should "return a project that exists" in {
     val (project, _) = setupProject(basicTypesGql)
