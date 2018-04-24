@@ -68,7 +68,7 @@ def commonDockerImageSettings(imageName: String) = commonServerSettings ++ Seq(
 def imageProject(name: String, imageName: String): Project = imageProject(name).enablePlugins(sbtdocker.DockerPlugin, JavaAppPackaging).settings(commonDockerImageSettings(imageName): _*)
 def imageProject(name: String): Project = Project(id = name, base = file(s"./images/$name"))
 def serverProject(name: String): Project = Project(id = name, base = file(s"./servers/$name")).settings(commonServerSettings: _*).dependsOn(scalaUtils)
-def connectorProject(name: String): Project =  Project(id = name, base = file(s"./connectors/$name")).settings(commonSettings: _*).dependsOn(scalaUtils).dependsOn(prismaConfig)
+def connectorProject(name: String): Project =  Project(id = name, base = file(s"./connectors/$name")).settings(commonSettings: _*).dependsOn(scalaUtils)
 def integrationTestProject(name: String): Project =  Project(id = name, base = file(s"./integration-tests/$name")).settings(commonSettings: _*)
 def libProject(name: String): Project =  Project(id = name, base = file(s"./libs/$name")).settings(commonSettings: _*)
 def normalProject(name: String): Project = Project(id = name, base = file(s"./$name")).settings(commonSettings: _*)
@@ -93,6 +93,7 @@ lazy val prismaImageShared = imageProject("prisma-image-shared")
 // ####################
 
 lazy val deploy = serverProject("deploy")
+  .dependsOn(deployConnector % "compile")
   .dependsOn(akkaUtils % "compile")
   .dependsOn(metrics % "compile")
   .dependsOn(jvmProfiler % "compile")
@@ -101,9 +102,9 @@ lazy val deploy = serverProject("deploy")
   .dependsOn(stubServer % "test")
   .dependsOn(sangriaUtils % "compile")
   .dependsOn(auth % "compile")
-  .dependsOn(connectorUtils % "compile->compile;test->test")
 
 lazy val api = serverProject("api")
+  .dependsOn(apiConnector % "compile")
   .dependsOn(deploy % "test->test")
   .dependsOn(messageBus % "compile")
   .dependsOn(akkaUtils % "compile")
@@ -112,12 +113,10 @@ lazy val api = serverProject("api")
   .dependsOn(cache % "compile")
   .dependsOn(auth % "compile")
   .dependsOn(sangriaUtils % "compile")
-  .dependsOn(connectorUtils %"compile->compile;test->test")
 
 lazy val subscriptions = serverProject("subscriptions")
   .dependsOn(api % "compile;test->test")
   .dependsOn(stubServer % "compile")
-  .dependsOn(connectorUtils % "test->test")
   .settings(
     libraryDependencies ++= Seq(playStreams)
   )
@@ -132,13 +131,12 @@ lazy val workers = serverProject("workers")
 //       CONNECTORS
 // ####################
 
-lazy val connectorUtils = connectorProject("utils").dependsOn(prismaConfig).dependsOn(allConnectorProjects)
-
 lazy val deployConnector = connectorProject("deploy-connector")
   .dependsOn(sharedModels % "compile")
 
 lazy val deployConnectorMySql = connectorProject("deploy-connector-mysql")
   .dependsOn(deployConnector % "compile")
+  .dependsOn(prismaConfig % "compile")
   .dependsOn(scalaUtils % "compile")
   .settings(
     libraryDependencies ++= slick ++ Seq(mariaDbClient)
@@ -146,6 +144,7 @@ lazy val deployConnectorMySql = connectorProject("deploy-connector-mysql")
 
 lazy val deployConnectorPostgres = connectorProject("deploy-connector-postgresql")
   .dependsOn(deployConnector % "compile")
+  .dependsOn(prismaConfig % "compile")
   .dependsOn(scalaUtils % "compile")
   .settings(
     libraryDependencies ++= slick ++ Seq(postgresClient)
@@ -160,6 +159,7 @@ lazy val apiConnector = connectorProject("api-connector")
 
 lazy val apiConnectorMySql = connectorProject("api-connector-mysql")
   .dependsOn(apiConnector % "compile")
+  .dependsOn(prismaConfig % "compile")
   .dependsOn(scalaUtils % "compile")
   .dependsOn(metrics % "compile")
   .settings(
@@ -168,6 +168,7 @@ lazy val apiConnectorMySql = connectorProject("api-connector-mysql")
 
 lazy val apiConnectorPostgres = connectorProject("api-connector-postgresql")
   .dependsOn(apiConnector % "compile")
+  .dependsOn(prismaConfig % "compile")
   .dependsOn(scalaUtils % "compile")
   .dependsOn(metrics % "compile")
   .settings(
@@ -361,7 +362,7 @@ val allIntegrationTestProjects = List(
 
 lazy val images = (project in file("images")).dependsOn(allDockerImageProjects)
 lazy val servers = (project in file("servers")).dependsOn(allServerProjects)
-lazy val connectors = (project in file("connectors")).dependsOn(allConnectorProjects).dependsOn(connectorUtils)
+lazy val connectors = (project in file("connectors")).dependsOn(allConnectorProjects)
 lazy val integrationTests = (project in file("integration-tests")).dependsOn(allConnectorProjects)
 lazy val libs = (project in file("libs")).dependsOn(allLibProjects)
 

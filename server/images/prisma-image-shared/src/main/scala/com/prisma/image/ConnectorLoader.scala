@@ -1,4 +1,4 @@
-package com.prisma.connectors.utils
+package com.prisma.image
 
 import com.prisma.api.connector.ApiConnector
 import com.prisma.api.connector.mysql.MySqlApiConnector
@@ -10,7 +10,7 @@ import com.prisma.deploy.connector.postgresql.PostgresDeployConnector
 
 import scala.concurrent.ExecutionContext
 
-object ConnectorUtils {
+object ConnectorLoader {
   def loadApiConnector(config: PrismaConfig)(implicit ec: ExecutionContext): ApiConnector = {
     val databaseConfig = config.databases.head
     databaseConfig.connector match {
