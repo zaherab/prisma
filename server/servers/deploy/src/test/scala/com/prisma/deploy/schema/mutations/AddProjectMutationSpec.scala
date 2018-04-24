@@ -1,4 +1,4 @@
-package com.prisma.deploy.database.schema.mutations
+package com.prisma.deploy.schema.mutations
 
 import com.prisma.deploy.specutils.DeploySpecBase
 import com.prisma.shared.models.ProjectId
