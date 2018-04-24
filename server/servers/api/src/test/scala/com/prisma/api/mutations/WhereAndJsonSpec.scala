@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class WhereAndJsonSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait WhereAndJsonSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "Using the same input in an update using where as used during creation of the item" should "work" in {
 

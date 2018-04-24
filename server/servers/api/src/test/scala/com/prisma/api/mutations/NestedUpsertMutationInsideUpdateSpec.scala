@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class NestedUpsertMutationInsideUpdateSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait NestedUpsertMutationInsideUpdateSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "a PM to C1!  relation with a child already in a relation" should "work with create" in {
     val project = SchemaDsl() { schema =>

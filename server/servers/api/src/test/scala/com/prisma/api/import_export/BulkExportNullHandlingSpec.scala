@@ -9,7 +9,7 @@ import com.prisma.shared.schema_dsl.SchemaDsl
 import com.prisma.utils.await.AwaitUtils
 import org.scalatest.{FlatSpec, Matchers}
 
-class BulkExportNullHandlingSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait BulkExportNullHandlingSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
 
   val start       = Cursor(0, 0)
   val emptyResult = ResultFormat(JsonBundle(Vector.empty, 0), Cursor(-1, -1), isFull = false)

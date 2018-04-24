@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class ValidateSubscriptionQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait ValidateSubscriptionQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
   "the query" should "return errors if the query is invalid GraphQL" in {
     val project = SchemaDsl() { schema =>
       schema.model("Todo").field_!("title", _.String)

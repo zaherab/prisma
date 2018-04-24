@@ -5,7 +5,7 @@ import com.prisma.shared.models.Project
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class UpdateManySpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait UpdateManySpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   val project: Project = SchemaDsl() { schema =>
     schema.model("Todo").field_!("title", _.String)

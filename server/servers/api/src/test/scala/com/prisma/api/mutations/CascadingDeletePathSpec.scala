@@ -7,7 +7,7 @@ import com.prisma.shared.models._
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class CascadingDeletePathSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait CascadingDeletePathSpec extends FlatSpec with Matchers with ApiBaseSpec {
   import Path.collectCascadingPaths
 
   "Paths" should "not be generated for non-cascading relations" in {

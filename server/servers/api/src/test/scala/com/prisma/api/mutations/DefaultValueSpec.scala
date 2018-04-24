@@ -5,7 +5,7 @@ import com.prisma.gc_values.StringGCValue
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class DefaultValueSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait DefaultValueSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "A Create Mutation on a non-list field" should "utilize the defaultValue" in {
     val project = SchemaDsl() { schema =>

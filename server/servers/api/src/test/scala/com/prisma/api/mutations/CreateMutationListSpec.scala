@@ -5,7 +5,7 @@ import com.prisma.api.util.TroubleCharacters
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class CreateMutationListSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait CreateMutationListSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   val project = SchemaDsl() { schema =>
     val enum = schema.enum(

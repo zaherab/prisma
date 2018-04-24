@@ -5,7 +5,7 @@ import com.prisma.shared.models.Project
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class ScalarListsQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait ScalarListsQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "empty scalar list" should "return empty list" in {
 

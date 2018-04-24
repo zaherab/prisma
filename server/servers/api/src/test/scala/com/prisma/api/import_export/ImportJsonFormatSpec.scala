@@ -10,7 +10,7 @@ import com.prisma.utils.await.AwaitUtils
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.JsArray
 
-class ImportJsonFormatSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait ImportJsonFormatSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
 
   "Import json nodes" should "work" in {
     val project: Project = SchemaDsl() { schema =>

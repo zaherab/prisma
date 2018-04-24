@@ -6,7 +6,7 @@ import com.prisma.shared.schema_dsl.SchemaDsl
 import com.prisma.utils.await.AwaitUtils
 import org.scalatest.{FlatSpec, Matchers}
 
-class BulkImportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait BulkImportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
 
   val project: Project = SchemaDsl() { schema =>
     val model1: SchemaDsl.ModelBuilder = schema

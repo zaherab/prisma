@@ -5,7 +5,7 @@ import com.prisma.shared.models.Project
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class FilterSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait FilterSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   val project: Project = SchemaDsl.fromString() { """
                                                    |type User {

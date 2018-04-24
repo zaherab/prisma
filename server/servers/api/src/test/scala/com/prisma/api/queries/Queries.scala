@@ -1,9 +1,10 @@
-package com.prisma.api
+package com.prisma.api.queries
 
+import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class Queries extends FlatSpec with Matchers with ApiBaseSpec {
+trait Queries extends FlatSpec with Matchers with ApiBaseSpec {
 
   "schema" should "include simple API features" in {
     val schema = SchemaDsl()

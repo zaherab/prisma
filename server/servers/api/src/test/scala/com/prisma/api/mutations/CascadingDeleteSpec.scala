@@ -5,7 +5,7 @@ import com.prisma.shared.models._
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class CascadingDeleteSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait CascadingDeleteSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   //region  TOP LEVEL DELETE
 

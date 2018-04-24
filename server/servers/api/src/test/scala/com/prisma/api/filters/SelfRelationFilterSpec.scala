@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class SelfRelationFilterSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait SelfRelationFilterSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   val project = SchemaDsl() { schema =>
     val human: SchemaDsl.ModelBuilder = schema

@@ -9,7 +9,7 @@ import com.prisma.utils.await.AwaitUtils
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.JsArray
 
-class BulkExportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait BulkExportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
 
   val project = SchemaDsl() { schema =>
     val model0: SchemaDsl.ModelBuilder = schema

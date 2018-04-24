@@ -6,7 +6,7 @@ import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._
 
-class CreateMutationSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait CreateMutationSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   val project = SchemaDsl() { schema =>
     val enum = schema.enum(

@@ -7,7 +7,7 @@ import com.prisma.shared.schema_dsl.SchemaDsl
 import com.prisma.utils.await.AwaitUtils
 import org.scalatest.{FlatSpec, Matchers}
 
-class ResetDataSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait ResetDataSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
 
   val project: Project = SchemaDsl() { schema =>
     val model1: SchemaDsl.ModelBuilder = schema
@@ -126,8 +126,8 @@ class ResetDataSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUt
 
     dataResolver(project).countByTable("_RelayId").await should be(0)
 
-    import slick.jdbc.PostgresProfile.api._
-    val insert = sql"INSERT INTO `#${project.id}`.`_Relation1` VALUES ('someID', 'a', 'b')"
+//    import slick.jdbc.PostgresProfile.api._
+//    val insert = sql"INSERT INTO `#${project.id}`.`_Relation1` VALUES ('someID', 'a', 'b')"
 
 //    intercept[PSQLException] { database.runDbActionOnClientDb(insert.asUpdate) }
   }

@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class DeleteManyMutationRelationsSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait DeleteManyMutationRelationsSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "a P0 to C1! relation " should "error when deleting the parent" in {
     val project = SchemaDsl() { schema =>

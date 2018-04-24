@@ -5,7 +5,7 @@ import com.prisma.shared.models.Project
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class UpsertDesignSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait UpsertDesignSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   //top level upserts
 

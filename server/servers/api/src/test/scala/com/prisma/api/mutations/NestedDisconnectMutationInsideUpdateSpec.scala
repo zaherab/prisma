@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class NestedDisconnectMutationInsideUpdateSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait NestedDisconnectMutationInsideUpdateSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "a P1 to C1  relation " should "be disconnectable through a nested mutation by id" in {
     val project = SchemaDsl() { schema =>

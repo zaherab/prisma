@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class NestedUpdateMutationInsideUpdateSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait NestedUpdateMutationInsideUpdateSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "a one to many relation" should "be updateable by id through a nested mutation" in {
     val project = SchemaDsl() { schema =>

@@ -14,7 +14,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.JsArray
 
-class DateTimeImportExportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait DateTimeImportExportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
 
   val project: Project = SchemaDsl() { schema =>
     schema

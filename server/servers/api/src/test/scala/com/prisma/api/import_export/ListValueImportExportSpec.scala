@@ -10,7 +10,7 @@ import com.prisma.utils.await.AwaitUtils
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._
 
-class ListValueImportExportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait ListValueImportExportSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
 
   val project: Project = SchemaDsl() { schema =>
     val enum = schema.enum("Enum", Vector("AB", "CD", "\uD83D\uDE0B", "\uD83D\uDCA9"))

@@ -5,7 +5,7 @@ import com.prisma.shared.models.Project
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class SameFieldSameModelRelationSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait SameFieldSameModelRelationSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "A Many to Many Self Relation" should "be accessible from both sides" in {
     val project: Project = SchemaDsl.fromString() { """type Post {

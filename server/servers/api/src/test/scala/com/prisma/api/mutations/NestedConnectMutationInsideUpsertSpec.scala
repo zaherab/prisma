@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class NestedConnectMutationInsideUpsertSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait NestedConnectMutationInsideUpsertSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "a one to many relation" should "be connectable by id within an upsert in the create case" ignore {
     val project = SchemaDsl() { schema =>

@@ -13,11 +13,11 @@ import play.api.libs.json.JsString
 trait ApiBaseSpec extends BeforeAndAfterEach with BeforeAndAfterAll with PlayJsonExtensions with StringMatchers with AwaitUtils {
   self: Suite =>
 
-  implicit lazy val system           = ActorSystem()
-  implicit lazy val materializer     = ActorMaterializer()
-  implicit lazy val testDependencies = new TestApiDependenciesImpl
-  val server                         = ApiTestServer()
-  val database                       = ApiTestDatabase()
+  implicit lazy val system       = ActorSystem()
+  implicit lazy val materializer = ActorMaterializer()
+  implicit def testDependencies: TestApiDependenciesBase
+  val server   = ApiTestServer()
+  val database = ApiTestDatabase()
 
   def dataResolver(project: Project): DataResolver = testDependencies.dataResolver(project)
 

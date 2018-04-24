@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class SingleItemQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait SingleItemQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "the single item query" should "return null if the id does not exist" in {
     val project = SchemaDsl() { schema =>

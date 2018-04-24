@@ -5,7 +5,7 @@ import com.prisma.shared.models.Project
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class RelationDesignSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait RelationDesignSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "Deleting a parent node" should "remove it from the relation and delete the relay id" in {
 

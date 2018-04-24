@@ -4,7 +4,7 @@ import com.prisma.api.ApiBaseSpec
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class MultiItemConnectionQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait MultiItemConnectionQuerySpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   "the connection query" should "return empty edges" in {
 

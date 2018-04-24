@@ -9,7 +9,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
 
-class DeadlockSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait DeadlockSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(100))
 

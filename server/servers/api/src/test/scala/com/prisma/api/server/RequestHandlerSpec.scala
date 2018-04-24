@@ -17,9 +17,10 @@ import sangria.schema.{ObjectType, Schema, SchemaValidationRule}
 
 import scala.concurrent.Future
 
-class RequestHandlerSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
+trait RequestHandlerSpec extends FlatSpec with Matchers with ApiBaseSpec with AwaitUtils {
   import system.dispatcher
-  import testDependencies.reporter
+
+  implicit val reporter = testDependencies.reporter
 
   "a request without token" should "result in an InvalidToken error" in {
     val error = handler(projectWithSecret).handleRawRequestForPublicApi(projectWithSecret.id, request("header")).failed.await

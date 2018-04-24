@@ -5,7 +5,7 @@ import com.prisma.shared.models.Project
 import com.prisma.shared.schema_dsl.SchemaDsl
 import org.scalatest.{FlatSpec, Matchers}
 
-class DeleteManyRelationFilterSpec extends FlatSpec with Matchers with ApiBaseSpec {
+trait DeleteManyRelationFilterSpec extends FlatSpec with Matchers with ApiBaseSpec {
 
   val project: Project = SchemaDsl() { schema =>
     val top        = schema.model("Top").field_!("top", _.String, isUnique = true)
