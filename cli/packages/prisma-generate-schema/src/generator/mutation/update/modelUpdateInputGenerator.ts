@@ -16,35 +16,49 @@ export default class ModelUpdateInputGenerator extends RelatedModelInputObjectTy
     }
   }
   /**
-   * Generates an update model input field for a relational type, handling the four cases many/one and with/without related type. 
+   * Generates an generator for a relational type, handling the four cases many/one and with/without related type. 
    * @param model 
    * @param field 
    * @param generators 
    */
-  public static generateRelationFieldForInputType(model: IGQLType, field: IGQLField, generators: IGenerators) {
+  public static getGeneratorForRelationField(field: IGQLField, generators: IGenerators) : RelatedModelInputObjectTypeGenerator {
     if (field.relatedField !== null) {
-      const relationInfo = { relatedField: field, relatedType: model, relationName: field.relationName }
       if (field.isList) {
-        return generators.modelUpdateManyWithoutRelatedInput.generate(field.type as IGQLType, relationInfo)
+        return generators.modelUpdateManyWithoutRelatedInput
       } else {
-        return generators.modelUpdateOneWithoutRelatedInput.generate(field.type as IGQLType, relationInfo)
+        return generators.modelUpdateOneWithoutRelatedInput
       }
     } else {
-      const relationInfo = { relatedField: field, relatedType: model, relationName: null }
       if (field.isList) {
-        return generators.modelUpdateManyInput.generate(field.type as IGQLType, relationInfo)
+        return generators.modelUpdateManyInput
       } else {
-        return generators.modelUpdateOneInput.generate(field.type as IGQLType, relationInfo)
+        return generators.modelUpdateOneInput
       }
     }
   }
 
-  public wouldBeEmpty(model: IGQLType, args: RelatedGeneratorArgs) {
-    return !TypeFromModelGenerator.hasFieldsExcept(model.fields, ...TypeFromModelGenerator.reservedFields)
+  public static generateRelationFieldForInputType(model: IGQLType, field: IGQLField, generators: IGenerators) {
+    const relationInfo = { relatedField: field, relatedType: model, relationName: field.relationName }
+    const generator = ModelUpdateInputGenerator.getGeneratorForRelationField(field, generators)
+
+    if(generator.wouldBeEmpty(field.type as IGQLType, relationInfo)) {
+      return null
+    } else {
+      return generator.generate(field.type as IGQLType, relationInfo)
+    }
   }
 
+  
   public getTypeName(input: IGQLType, args: RelatedGeneratorArgs) {
     return `${input.name}UpdateInput`
+  }
+  
+  protected wouldBeEmptyInternal(model: IGQLType, args: RelatedGeneratorArgs) {
+    return !TypeFromModelGenerator.hasScalarFieldsExcept(model.fields, ...TypeFromModelGenerator.reservedFields) &&
+            model.fields.filter(field => typeof(field.type) === 'object').every(field => {
+              const generator = ModelUpdateInputGenerator.getGeneratorForRelationField(field, this.generators)
+              return generator.wouldBeEmpty(field.type as IGQLType, { relatedField: field, relatedType: model, relationName: field.relationName })
+            })
   }
 
   protected generateScalarFieldType(model: IGQLType, args: RelatedGeneratorArgs, field: IGQLField) {

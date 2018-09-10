@@ -4,9 +4,9 @@ import { GraphQLObjectType, GraphQLInputFieldConfigMap, GraphQLFieldConfig, Grap
 
 export abstract class ModelCreateOneOrManyInputGenerator extends ModelInputObjectTypeGenerator {
 
-  public wouldBeEmpty(model: IGQLType, args: {}) {
-    return !TypeFromModelGenerator.hasFieldsExcept(model.fields, ...TypeFromModelGenerator.reservedFields) &&
-      !TypeFromModelGenerator.hasUniqueField(model.fields)
+  protected wouldBeEmptyInternal(model: IGQLType, args: {}) {
+    return this.generators.modelWhereUniqueInput.wouldBeEmpty(model, {}) &&
+           this.generators.modelCreateInput.wouldBeEmpty(model, {})
   }
 
   protected abstract maybeWrapList(input: GraphQLInputObjectType): GraphQLInputObjectType
@@ -14,11 +14,11 @@ export abstract class ModelCreateOneOrManyInputGenerator extends ModelInputObjec
   protected generateFields(model: IGQLType, args: {}) {
     const fields = {} as GraphQLInputFieldConfigMap
 
-    if (TypeFromModelGenerator.hasFieldsExcept(model.fields, ...TypeFromModelGenerator.reservedFields)) {
+    if (!this.generators.modelCreateInput.wouldBeEmpty(model, {})) {
       fields.create = { type: this.maybeWrapList(this.generators.modelCreateInput.generate(model, {})) }
     }
 
-    if (TypeFromModelGenerator.hasUniqueField(model.fields)) {
+    if (!this.generators.modelWhereUniqueInput.wouldBeEmpty(model, {})) {
       fields.connect = { type: this.maybeWrapList(this.generators.modelWhereUniqueInput.generate(model, {})) }
     }
 
@@ -28,7 +28,6 @@ export abstract class ModelCreateOneOrManyInputGenerator extends ModelInputObjec
 
 // tslint:disable-next-line:max-classes-per-file
 export default class ModelCreateManyInputGenerator extends ModelCreateOneOrManyInputGenerator {
-
   public getTypeName(input: IGQLType, args: RelatedGeneratorArgs) {
     return `${input.name}CreateManyInput`
   }

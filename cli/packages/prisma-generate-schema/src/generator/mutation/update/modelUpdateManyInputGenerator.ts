@@ -3,12 +3,12 @@ import { IGQLType, IGQLField } from '../../../datamodel/model'
 import { GraphQLObjectType, GraphQLInputFieldConfigMap, GraphQLFieldConfig, GraphQLList, GraphQLNonNull, GraphQLInputObjectType, GraphQLString } from "graphql/type"
 
 
-export default class ModelUpdateManyInputTypeGenerator extends ModelInputObjectTypeGenerator {
+export default class ModelUpdateManyInputTypeGenerator extends RelatedModelInputObjectTypeGenerator {
   public getTypeName(input: IGQLType, args: {}) {
     return `${input.name}UpdateManyInput`
   }
 
-  public wouldBeEmpty(model: IGQLType, args: {}) {
+  protected wouldBeEmptyInternal(model: IGQLType, args: {}) {
     return this.generators.modelCreateInput.wouldBeEmpty(model, args) &&
       this.generators.modelWhereUniqueInput.wouldBeEmpty(model, args)
   }

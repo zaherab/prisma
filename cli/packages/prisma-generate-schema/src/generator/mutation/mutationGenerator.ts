@@ -47,11 +47,11 @@ export default class MutationGenerator extends RootGenerator {
     const fields = {} as GraphQLFieldConfigMap
 
     if (this.generators.modelUpdateInput.wouldBeEmpty(model, {})) {
-      return fields
+      return null
     }
 
     if (this.generators.modelWhereUniqueInput.wouldBeEmpty(model, {})) {
-      return fields
+      return null
     }
 
     fields[`update${model.name}`] = {

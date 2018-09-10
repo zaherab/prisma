@@ -11,6 +11,10 @@ export class TypeRegistry {
   [typeName: string]: GraphQLObjectType
 }
 
+export class RecursionStack {
+  [typeName: string]: boolean
+}
+
 /**
  * Base class of all generators, 
  * has a reference to the set of generators we need
@@ -19,10 +23,12 @@ export class TypeRegistry {
 export abstract class Generator<In, Args, Out> {
   protected knownTypes: TypeRegistry
   protected generators: IGenerators
+  protected stack: RecursionStack
 
-  constructor(knownTypes: TypeRegistry, generators: IGenerators) {
+  constructor(knownTypes: TypeRegistry, stack: RecursionStack, generators: IGenerators) {
     this.knownTypes = knownTypes
     this.generators = generators
+    this.stack = stack
   }
 
   /**
@@ -52,7 +58,29 @@ export abstract class TypeGenerator<In, Args, Type extends GraphQLObjectType> ex
     }
   }
 
-  protected abstract generateInternal(input: In, args?: Args): Type
+
+  /**
+   * Indicates if the resulting type would be empty. 
+   * @param model 
+   * @param args 
+   */
+  public wouldBeEmpty(input: In, args: Args): boolean {
+    const name = this.getTypeName(input, args)
+    if(this.stack.hasOwnProperty(name)) {
+      return this.stack[name]
+    } else {
+      this.stack[name] = false
+      const res = this.wouldBeEmptyInternal(input, args)
+      this.stack[name] = res
+      //console.log(name, res)
+      return res
+    }
+  }
+
+  protected wouldBeEmptyInternal(input: In, args: Args): boolean {
+    return false
+  }
+  protected abstract generateInternal(input: In, args: Args): Type
 }
 
 /**
@@ -77,8 +105,8 @@ export abstract class TypeFromModelGenerator<
    * a unique field.
    * @param fields 
    */
-  public static hasUniqueField(fields: IGQLField[]) {
-    return fields.filter(field => field.isUnique).length > 0
+  public static hasUniqueScalarField(fields: IGQLField[]) {
+    return fields.filter(field => (typeof(field.type) === 'string' || field.type.isEnum) && field.isUnique).length > 0
   }
 
   /**
@@ -88,17 +116,9 @@ export abstract class TypeFromModelGenerator<
    * @param fields 
    * @param fieldNames 
    */
-  public static hasFieldsExcept(fields: IGQLField[], ...fieldNames: string[]) {
-    return fields.filter(field => !fieldNames.includes(field.name)).length > 0
-  }
-
-  /**
-   * Indicates if the resulting type would be empty. 
-   * @param model 
-   * @param args 
-   */
-  public wouldBeEmpty(model: IGQLType, args: Args): boolean {
-    return false
+  public static hasScalarFieldsExcept(fields: IGQLField[], ...fieldNames: string[]) {
+   // console.log(fields, fieldNames)
+    return fields.filter(field => (typeof(field.type) === 'string' || field.type.isEnum) && !fieldNames.includes(field.name)).length > 0
   }
 
   /**
